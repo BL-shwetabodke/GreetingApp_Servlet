@@ -1,3 +1,4 @@
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="com.bridgelabz.greetingapp.model.Greeting" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %><%--
@@ -8,17 +9,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Greeting> greetingList = (List<Greeting>)session.getAttribute("greetings");
+%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <%
-        List<Greeting> greetings = new ArrayList<>();
-        greetings = (List<Greeting>)session.getAttribute("greetings");
-        for (Greeting greeting: greetings) {
-            System.out.println(greeting.greetingId + " " + greeting.greetingMessage);
-        }
-    %>
+
+<%=greetingList%>
+
+    <c:forEach items="${pageScope.greetingList}" var="greetingMessage" varStatus="greetingCounter">
+            Greeting ID: <c:out value="${greetingCounter}"/>
+            Greeting Message: <c:out value="${greetingMessage}"/>
+    </c:forEach>
+
 </body>
 </html>

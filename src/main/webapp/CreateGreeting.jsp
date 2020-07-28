@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
 </head>
 <body>
-$END$
+
+    <form method="post" action="/greetingapp/greeting">
+        <input type="text" name="greetingMessage"/>
+        <button type="submit">Add Greeting</button>
+    </form>
+
 </body>
 </html>
