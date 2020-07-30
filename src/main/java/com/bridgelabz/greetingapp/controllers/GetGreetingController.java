@@ -17,9 +17,6 @@ public class GetGreetingController extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         GreetingDAO.getConnection();
         List<String> greetings = GreetingDAO.findAllGreetings();
-        for (String greeting: greetings) {
-            System.out.println(greeting);
-        }
         httpServletRequest.getSession().setAttribute("greetings", greetings);
         RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher(httpServletResponse.encodeURL("home.jsp"));
         try {
