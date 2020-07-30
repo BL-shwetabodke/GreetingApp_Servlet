@@ -38,16 +38,18 @@ public class GreetingDAO {
         }
     }
 
-    public static List<String> findAllGreetings() {
-        List<String> greetings = new ArrayList<>();
+    public static List<Greeting> findAllGreetings() {
+        List<Greeting> greetings = new ArrayList<>();
         String sqlQuery = "select * from Greetings";
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
-                String greetingMessage = resultSet.getString(2);
-                greetings.add(greetingMessage);
+                Greeting greeting = new Greeting();
+                greeting.greetingId = resultSet.getInt(1);
+                greeting.greetingMessage = resultSet.getString(2);
+                greetings.add(greeting);
             }
             preparedStatement.close();
             return greetings;
@@ -55,6 +57,17 @@ public class GreetingDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean deleteById(Integer id){
+        String sqlQuery = "DELETE FROM Greetings WHERE id="+id;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            return preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void close() {
